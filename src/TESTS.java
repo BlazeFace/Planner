@@ -5,12 +5,12 @@ public class TESTS {
         Scheduler a = new Scheduler();
         Scheduler b = new Scheduler();
         try{
-            TimeSlot h = new TimeSlot("Sat Jun 02 12:00:00 IST 2010",(int)(10*Math.random()), 1, "a");
-            TimeSlot t = new TimeSlot("Sat Jun 01 12:59:00 IST 2010",(int)(10*Math.random()), 1, "a");
+            TimeSlot h = new TimeSlot("Sat Jun 02 12:00:00 EST 2010",(int)(10*Math.random()), 1, "a");
+            TimeSlot t = new TimeSlot("Sat Jun 01 12:59:00 EST 2010",(int)(10*Math.random()), 1, "a");
             a.addSlot(h);
             a.addSlot(t);
-            TimeSlot l = new TimeSlot("Sat Jun 01 12:40:00 IST 2010",(int)(10*Math.random()), .4, "a");
-            TimeSlot d = new TimeSlot("Sat Jun 01 12:00:00 IST 2010",(int)(10*Math.random()), 1, "a");
+            TimeSlot l = new TimeSlot("Sat Jun 01 12:10:00 EST 2010",(int)(10*Math.random()), .4, "a");
+            TimeSlot d = new TimeSlot("Sat Jun 01 12:00:00 EST 2010",(int)(10*Math.random()), 1, "a");
             b.addSlot(l);
             b.addSlot(d);
             //System.out.println(h.getDate().getTime());
@@ -20,6 +20,9 @@ public class TESTS {
         }
         catch (ParseException e){
             System.out.println("Error: Illegal Date Format");
+        }
+        catch (IllegalArgumentException e){
+            System.out.println("Conflict between dates");
         }
 
     }
