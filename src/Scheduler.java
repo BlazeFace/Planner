@@ -9,9 +9,14 @@ import java.util.Hashtable;
  */
 
 public class Scheduler implements Iterable<TimeSlot> {
-    int aSize = 0;
-    Hashtable find = new Hashtable();
+    private int aSize = 0;
+    private Hashtable<String, TimeSlot> find = new Hashtable<>();
     private ArrayList<TimeSlot> dates = new ArrayList<TimeSlot>();
+
+    public Scheduler(Hashtable<String, TimeSlot> fin, ArrayList<TimeSlot> dates) {
+        this.find = fin;
+        this.dates = dates;
+    }
 
     public Scheduler() {
     }
@@ -32,7 +37,7 @@ public class Scheduler implements Iterable<TimeSlot> {
                 dates.remove(this.conflicts(a).getT());
                 this.putSlot(a);
                 return;
-            } else return;
+            } else throw new IllegalArgumentException("Conflict with date");
         }
         aSize++;
         dates.add(a);
@@ -55,7 +60,7 @@ public class Scheduler implements Iterable<TimeSlot> {
 
     public TimeSlot find(String d) {
         if (find.containsKey(d)) {
-            return (TimeSlot) find.get(d);
+            return find.get(d);
         } else throw new IllegalArgumentException("Key Not Found");
     }
 
@@ -73,6 +78,17 @@ public class Scheduler implements Iterable<TimeSlot> {
             }
         }
         return new Conflict(false, null);
+    }
+
+    public Conflict conflicts(Scheduler t){
+        Scheduler b = new Scheduler(this.find, this.dates);
+            for (TimeSlot g : t){
+                if(b.conflicts(g).getConflict()){
+                    return new Conflict(true, g);
+                }
+            }
+
+        return new Conflict(false, t.get(0));
     }
 
 
